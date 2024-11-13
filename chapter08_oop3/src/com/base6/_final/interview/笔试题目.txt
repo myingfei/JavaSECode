@@ -1,0 +1,27 @@
+
+题目1：排错
+public class Something {
+    public int addOne(final int x) {
+        return ++x;
+        // return x + 1;
+    }
+}
+结论：final 修饰 x，就不能再修改操作，++x 对 x 进行了自增，改变了 x ，如果改成 return x + 1 就是正确的，因为 x + 1 并未对 x 进行操作，只是返回一个数值
+
+
+题目2：排错
+public class Something {
+    public static void main(String[] args) {
+        Other o = new Other();
+        new Something().addOne(o);
+    }
+    public void addOne(final Other o) {
+        // o = new Other();
+        o.i++;
+    }
+}
+class Other {
+    public int i;
+}
+结论：final 是针对 o 的，o.i++ 不影响，但是如果 o = new Othor() 就会错误，因为改变了 o
+
